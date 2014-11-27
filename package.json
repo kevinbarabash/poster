@@ -2,7 +2,7 @@
   "name": "poster",
   "version": "0.0.1",
   "description": "poster ======",
-  "main": "./lib/index.js",
+  "main": "./lib/poster.js",
   "directories": {
     "test": "test"
   },
