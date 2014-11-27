@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>poster TEST RUNNER</title>
+</head>
+<body>
+
+</body>
+</html>
+<script src="../src/poster-browser.js"></script>
+<script>
+
+  var poster = new Poster(window);
+
+  poster.listen("msg", function (msg) {
+    console.log(msg);
+  });
+
+  poster.post("msg", "hello, world!");
+
+</script>
