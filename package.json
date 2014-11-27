@@ -2,7 +2,7 @@
   "name": "poster",
   "version": "0.0.1",
   "description": "poster ======",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "directories": {
     "test": "test"
   },
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/kevinb7/poster/issues"
   },
-  "homepage": "https://github.com/kevinb7/poster"
+  "homepage": "https://github.com/kevinb7/poster",
+  "devDependencies": {
+    "browserify": "^6.3.3",
+    "gulp-tsc": "^0.9.2",
+    "tsify": "^0.6.3",
+    "vinyl-source-stream": "^1.0.0"
+  }
 }
