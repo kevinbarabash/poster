@@ -14,7 +14,7 @@ gulp.task("build-browser", function () {
 
 gulp.task("build-node", function () {
     gulp.src(['src/**/*.ts'])
-        .pipe(tsc({ target: 'ES5', removeComments: true }))
+        .pipe(tsc({ target: 'ES5', removeComments: true, declaration: true }))
         .pipe(gulp.dest('./lib'))
 });
 
