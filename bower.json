@@ -1,6 +1,7 @@
 {
   "name": "poster",
-  "version": "0.0.1",
+  "main": "dist/poster.js",
+  "version": "0.0.2",
   "homepage": "https://github.com/kevinb7/poster",
   "authors": [
     "Kevin Barabash <kevinb7@gmail.com>"
@@ -11,6 +12,7 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "lib"
   ]
 }
