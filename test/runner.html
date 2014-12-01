@@ -3,20 +3,27 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>poster TEST RUNNER</title>
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css"/>
 </head>
 <body>
+
+<div id="mocha"></div>
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/expect.js/index.js"></script>
+<script>mocha.setup('bdd')</script>
 
 </body>
 </html>
 <script src="../dist/poster.js"></script>
+<script src="poster-spec.js"></script>
 <script>
 
-  var poster = new Poster(window);
-
-  poster.listen("msg", function (msg) {
-    console.log(msg);
-  });
-
-  poster.post("msg", "hello, world!");
+  window.onload = function () {
+    if (window.mochaPhantomJS) {
+      mochaPhantomJS.run();
+    } else {
+      mocha.run();
+    }
+  };
 
 </script>

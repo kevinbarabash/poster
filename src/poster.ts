@@ -27,10 +27,11 @@ window.addEventListener("message", function (e: MessageEvent) {
 class Poster {
     listeners: { [index:string]: (...args) => any };
     target: Window;
-    origin = "*";
+    origin: string;
 
-    constructor(target: Window) {
+    constructor(target: Window, origin = "*") {
         this.target = target;
+        this.origin = origin;
         this.listeners = {};
         posters.push(this);
     }

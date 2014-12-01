@@ -12,9 +12,10 @@ window.addEventListener("message", function (e) {
     });
 });
 var Poster = (function () {
-    function Poster(target) {
-        this.origin = "*";
+    function Poster(target, origin) {
+        if (origin === void 0) { origin = "*"; }
         this.target = target;
+        this.origin = origin;
         this.listeners = {};
         posters.push(this);
     }
