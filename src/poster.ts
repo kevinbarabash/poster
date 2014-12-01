@@ -9,7 +9,7 @@ var posters:Poster[] = [];
 
 // only need one event listener per Window context
 // we'll multiplex it
-window.addEventListener("message", function (e: MessageEvent) {
+self.addEventListener("message", function (e: MessageEvent) {
     var channel = e.data.channel;
 
     // TODO: consider assigning unique ids to each window
@@ -26,13 +26,23 @@ window.addEventListener("message", function (e: MessageEvent) {
 
 class Poster {
     listeners: { [index:string]: (...args) => any };
-    target: Window;
+    target: any;
     origin: string;
 
-    constructor(target: Window, origin = "*") {
-        this.target = target;
+    constructor(target: any, origin = "*") {
         this.origin = origin;
+        this.target = target;
         this.listeners = {};
+        if (self.window && this.target instanceof Worker) {
+            this.target.addEventListener("message", e => {
+                debugger;
+                var channel = e.data.channel;
+                var listener = this.listeners[channel];
+                if (listener) {
+                    listener.apply(null, e.data.args);
+                }
+            });
+        }
         posters.push(this);
     }
 
@@ -41,10 +51,19 @@ class Poster {
             channel: channel,
             args: args
         };
-        this.target.postMessage(message, this.origin);
+        if (self.window) {
+            if (this.target instanceof Worker) {
+                this.target.postMessage(message);
+            } else {
+                this.target.postMessage(message, this.origin);
+            }
+        } else {
+            this.target.postMessage(message);
+        }
     }
 
     listen(channel: string, callback: (...args) => any) {
+        // TODO: handle web workers differently
         this.listeners[channel] = callback;
     }
 }

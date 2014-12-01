@@ -14,9 +14,5 @@
     "test",
     "tests",
     "lib"
-  ],
-  "devDependencies": {
-    "mocha": "~2.0.1",
-    "expect": "~0.3.1"
-  }
+  ]
 }
