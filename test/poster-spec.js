@@ -34,6 +34,26 @@ describe("Poster", function () {
       });
       poster.post("objMsg", { x:5, y:10 });
     });
+
+    it("should return a list of listeners", function () {
+      var listener1 = function () {};
+      var listener2 = function () {};
+
+      poster.on("echo", listener1);
+      poster.on("echo", listener2);
+
+      var listeners = poster.listeners("echo");
+      expect(listeners[0]).to.be(listener1);
+      expect(listeners[1]).to.be(listener2);
+    });
+
+    it("should remove all listeners", function () {
+      poster.on("echo", function () {});
+      poster.on("echo", function () {});
+
+      poster.removeAllListeners("echo");
+      expect(poster.listeners("echo")).to.have.length(0);
+    });
   });
 
   describe("Iframe", function () {
