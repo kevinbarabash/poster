@@ -56,6 +56,60 @@ describe("Poster", function () {
     });
   });
 
+  describe("other Windows", function () {
+    var win;
+
+    beforeEach(function (done) {
+      win = window.open("window.html", "test", "height=200,width=200");
+      setTimeout(function () {
+        done();
+      }, 200);
+      poster = new Poster(win);
+    });
+
+    afterEach(function (done) {
+      win.addEventListener("beforeunload", function (e) {
+        done();
+      });
+      win.close();
+    });
+
+    it("should echo message back to the main window", function (done) {
+      poster.listen("echo", function (msg) {
+        expect(msg).to.be("hello, world!");
+        done();
+      });
+      poster.post("echo", "hello, world!");
+    });
+
+    it("should double the message when sending it back to the main window", function (done) {
+      poster.listen("double", function (msg) {
+        expect(msg).to.be("hello, world!hello, world!");
+        done();
+      });
+      poster.post("double", "hello, world!");
+    });
+
+    it("should work with multiple arguments", function (done) {
+      poster.listen("three_args", function (a,b,c) {
+        expect(a).to.be("one");
+        expect(b).to.be("two");
+        expect(c).to.be("three");
+        done();
+      });
+      poster.post("three_args", "one", "two", "three");
+    });
+
+    it("should work with objects", function (done) {
+      poster.listen("objMsg", function (obj) {
+        expect(obj.x).to.be(5);
+        expect(obj.y).to.be(10);
+        done();
+      });
+      poster.post("objMsg", { x:5, y:10 });
+    });
+  });
+
   describe("Iframe", function () {
     var iframe;
 
@@ -82,7 +136,7 @@ describe("Poster", function () {
       poster.post("echo", "hello, world!");
     });
 
-    it("should eouble the message when sending it back to the main window", function (done) {
+    it("should double the message when sending it back to the main window", function (done) {
       poster.listen("double", function (msg) {
         expect(msg).to.be("hello, world!hello, world!");
         done();
@@ -136,7 +190,7 @@ describe("Poster", function () {
       poster.emit("echo", "hello, world!");
     });
 
-    it("should eouble the message when sending it back to the main window", function (done) {
+    it("should double the message when sending it back to the main window", function (done) {
       poster.on("double", function (msg) {
         expect(msg).to.be("hello, world!hello, world!");
         done();
