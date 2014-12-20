@@ -1,7 +1,7 @@
 {
   "name": "poster",
   "main": "dist/poster.js",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "homepage": "https://github.com/kevinb7/poster",
   "authors": [
     "Kevin Barabash <kevinb7@gmail.com>"
