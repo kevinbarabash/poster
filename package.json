@@ -1,6 +1,6 @@
 {
   "name": "poster",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "EventEmitter style API for communicating with iframes and web workers",
   "main": "./lib/poster.js",
   "directories": {

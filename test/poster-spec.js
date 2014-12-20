@@ -121,7 +121,7 @@ describe("Poster", function () {
       };
       document.body.appendChild(iframe);
 
-      poster = new Poster(iframe.contentWindow);
+      poster = new Poster(iframe);
     });
 
     afterEach(function () {
@@ -175,7 +175,7 @@ describe("Poster", function () {
       };
       document.body.appendChild(iframe);
 
-      poster = new Poster(iframe.contentWindow);
+      poster = new Poster(iframe);
     });
 
     afterEach(function () {
@@ -502,7 +502,7 @@ describe("Poster", function () {
       };
       document.body.appendChild(iframe);
 
-      poster2 = new Poster(iframe.contentWindow);
+      poster2 = new Poster(iframe);
     });
 
     afterEach(function () {

@@ -49,12 +49,16 @@ class Poster {
      * @param [origin] only valid when used with iframes
      */
     constructor(target: any, origin = "*") {
+        if (self.window && target instanceof HTMLIFrameElement) {
+            target = target.contentWindow;
+        }
+        
         this.origin = origin;
         this.target = target;
         this.channels = {};
 
-        if (self.window && this.target instanceof Worker) {
-            this.target.addEventListener("message", e => {
+        if (self.window && target instanceof Worker) {
+            target.addEventListener("message", e => {
                 var channel = e.data.channel;
                 var listeners = this.channels[channel];
                 if (listeners) {
