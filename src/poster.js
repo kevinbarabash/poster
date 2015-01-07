@@ -8,12 +8,12 @@
  * channel (event).
  */
 
-var posters:Poster[] = [];
+var posters = [];
 
 // TODO: notify other listeners that a source has been removed
 
 if (self.document) {    // not a web worker
-    self.addEventListener("message", function (e: MessageEvent) {
+    self.addEventListener("message", function (e) {
         var channel = e.data.channel;
         posters.forEach(poster => {
             if (poster.target === e.source) {   // web workers have source set to nulll
@@ -24,8 +24,9 @@ if (self.document) {    // not a web worker
             }
         });
     });
-} else {                // probably a web worker
-    self.addEventListener("message", function (e: MessageEvent) {
+} else {               
+    // probably a web worker
+    self.addEventListener("message", function (e) {
         var channel = e.data.channel;
         posters.forEach(poster => {
             var listeners = poster.channels[channel];
@@ -37,10 +38,6 @@ if (self.document) {    // not a web worker
 }
 
 class Poster {
-    channels: { [channel:string]: any[] };
-    target: any;    // Window | Worker | DedicatedWorkerGlobalScope
-    origin: string;
-
     /**
      * Construct a new Poster instance which can be used to send
      * messages to/from web workers and iframes.
@@ -48,7 +45,7 @@ class Poster {
      * @param {Window|Worker|DedicatedWorkerGlobalScope} target
      * @param [origin] only valid when used with iframes
      */
-    constructor(target: any, origin = "*") {
+    constructor(target, origin = "*") {
         if (self.window && target instanceof HTMLIFrameElement) {
             target = target.contentWindow;
         }
@@ -108,7 +105,7 @@ class Poster {
      * @param callback
      * @returns {Poster}
      */
-    listen(channel: string, callback: (...args) => any) {
+    listen(channel, callback) {
         var listeners = this.channels[channel];
         if (listeners === undefined) {
             listeners = this.channels[channel] = [];
@@ -124,7 +121,7 @@ class Poster {
      * @param callback
      * @returns {Poster}
      */
-    addListener(channel: string, callback: (...args) => any) {
+    addListener(channel, callback) {
         return this.listen(channel, callback);
     }
 
@@ -135,7 +132,7 @@ class Poster {
      * @param callback
      * @returns {Poster}
      */
-    on(channel: string, callback: (...args) => any) {
+    on(channel, callback) {
         return this.listen(channel, callback);
     }
 
@@ -145,7 +142,7 @@ class Poster {
      * @param channel
      * @param callback
      */
-    removeListener(channel: string, callback: (...args) => any) {
+    removeListener(channel, callback) {
         var listeners = this.channels[channel];
         if (listeners) {
             var index = listeners.indexOf(callback);
@@ -160,7 +157,7 @@ class Poster {
      *
      * @param channel
      */
-    removeAllListeners(channel: string) {
+    removeAllListeners(channel) {
         this.channels[channel] = [];
     }
 
@@ -169,10 +166,10 @@ class Poster {
      * @param channel
      * @returns {Array}
      */
-    listeners(channel: string) {
+    listeners(channel) {
         var listeners = this.channels[channel];
         return listeners || [];
     }
 }
 
-export = Poster;
+module.exports = Poster;
